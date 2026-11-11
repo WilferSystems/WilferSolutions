@@ -1,0 +1,15 @@
+---
+const { compact = false, lang = 'es' } = Astro.props;
+const isEnglish = lang === 'en';
+const label = isEnglish ? 'Wilfer Solutions — Technology that solves' : 'Wilfer Solutions — Tecnología que resuelve';
+---
+<a class="brand" href={`/${lang}/`} aria-label={isEnglish ? 'Wilfer Solutions, home' : 'Wilfer Solutions, inicio'}>
+  {compact ? (
+    <img class="brand-symbol" src="/favicon.png" width="64" height="64" alt="" />
+  ) : (
+    <>
+      <img class="brand-logo brand-logo-light" src="/logo-light.png" width="1000" height="273" alt={label} />
+      <img class="brand-logo brand-logo-dark" src="/logo-dark.png" width="1000" height="273" alt={label} />
+    </>
+  )}
+</a>

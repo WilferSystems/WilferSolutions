@@ -1,0 +1,19 @@
+---
+export const prerender = true;
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import { getCollection, render } from 'astro:content';
+import { siteUrl } from '../../../lib/content';
+export async function getStaticPaths(){
+  const entries=await getCollection('blog');
+  return entries.map(entry=>{
+    const en=entry.id==='account-security'; const lang=en?'en':'es'; const slug=en?'account-security':'seguridad-cuentas';
+    return {params:{lang,slug},props:{entry,alternatePath:`/${en?'es':'en'}/blog/${en?'seguridad-cuentas':'account-security'}/`}};
+  });
+}
+const {entry,alternatePath}=Astro.props; const en=entry.id==='account-security';const lang=en?'en':'es';const {Content}=await render(entry);
+const title=entry.data.title;const description=en?'Simple recommendations to help protect your personal and work accounts.':'Recomendaciones sencillas para cuidar tus cuentas personales y profesionales.';const path=`/${lang}/blog/${en?'account-security':'seguridad-cuentas'}/`;
+---
+<BaseLayout lang={lang} title={`${title} | Wilfer Solutions`} description={description} path={path} alternatePath={alternatePath}>
+  <script type="application/ld+json" set:html={JSON.stringify({'@context':'https://schema.org','@type':'BlogPosting',headline:title,description,author:{'@type':'Person',name:'Wilfer Florentin'},publisher:{'@type':'Organization',name:'Wilfer Solutions'},mainEntityOfPage:siteUrl?`${siteUrl}${path}`:undefined})}/>
+  <header class="page-hero"><span class="eyebrow">{entry.data.category.toUpperCase()} · {entry.data.readingTime} {en?'MIN READ':'MIN DE LECTURA'}</span><h1>{title}</h1><p>{description}</p></header><article class="article-body"><Content/></article>
+</BaseLayout>

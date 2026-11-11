@@ -1,0 +1,11 @@
+---
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import '../styles/global.css';
+import { siteUrl, type Lang } from '../lib/content';
+const { lang='es', title, description, path = `/${lang}/`, alternatePath: alternateOverride } = Astro.props as {lang:Lang;title:string;description:string;path?:string;alternatePath?:string};
+const canonical = siteUrl ? `${siteUrl}${path}` : undefined;
+const alternatePath = alternateOverride || path.replace(/^\/(es|en)\//, `/${lang === 'es' ? 'en' : 'es'}/`);
+
+---
+<!doctype html><html lang={lang} data-theme="light"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/><meta name="generator" content={Astro.generator}/><title>{title}</title><meta name="description" content={description}/>{canonical && <link rel="canonical" href={canonical}/ >}{siteUrl && <><link rel="alternate" hreflang="es" href={lang === 'es' ? canonical : `${siteUrl}${alternatePath}`}/><link rel="alternate" hreflang="en" href={lang === 'en' ? canonical : `${siteUrl}${alternatePath}`}/><link rel="alternate" hreflang="x-default" href={`${siteUrl}/es/`}/></>}<meta property="og:type" content="website"/><meta property="og:site_name" content="Wilfer Solutions"/><meta property="og:title" content={title}/><meta property="og:description" content={description}/>{canonical && <meta property="og:url" content={canonical}/>}<meta name="twitter:card" content="summary"/><meta name="theme-color" content="#0b1c35"/><script is:inline>try{const t=localStorage.getItem('ws-theme');document.documentElement.dataset.theme=t||(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light')}catch{}</script><link rel="icon" type="image/png" sizes="64x64" href="/favicon.png"/></head><body><a class="skip-link" href="#main">{lang==='es'?'Saltar al contenido':'Skip to content'}</a><Header lang={lang} switchHref={alternatePath}/><main id="main"><slot/></main><Footer lang={lang}/></body></html>

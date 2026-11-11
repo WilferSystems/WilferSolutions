@@ -1,0 +1,29 @@
+---
+import Brand from './Brand.astro';
+import { nav, type Lang } from '../lib/content';
+const { lang = 'es', switchHref = (lang === 'es' ? '/en/' : '/es/') } = Astro.props as {lang:Lang;switchHref?:string};
+const labels = lang === 'es' ? {theme:'Cambiar tema',light:'Cambiar a modo claro',dark:'Cambiar a modo oscuro',menu:'Abrir navegación',close:'Cerrar navegación'} : {theme:'Toggle theme',light:'Switch to light mode',dark:'Switch to dark mode',menu:'Open navigation',close:'Close navigation'};
+---
+<header class="site-header">
+  <div class="header-inner"><Brand lang={lang} />
+    <nav class="desktop-nav" aria-label={lang === 'es' ? 'Navegación principal' : 'Main navigation'}>{nav[lang].map((item)=><a href={item.href}>{item.label}</a>)}</nav>
+    <div class="header-tools"><a class="lang-switch" href={switchHref} aria-label={lang === 'es' ? 'English version' : 'Versión en español'}>{lang === 'es' ? 'EN' : 'ES'} <span aria-hidden="true">↗</span></a>
+      <button class="theme-toggle" type="button" aria-label={labels.theme} title={labels.theme} data-light-label={labels.light} data-dark-label={labels.dark}><span class="theme-icon" aria-hidden="true">◐</span></button>
+      <button class="menu-toggle" type="button" aria-expanded="false" aria-label={labels.menu} data-close-label={labels.close} data-open-label={labels.menu}><span></span><span></span></button>
+    </div>
+  </div>
+  <nav class="mobile-nav" aria-label={lang === 'es' ? 'Navegación móvil' : 'Mobile navigation'}>{nav[lang].map((item)=><a href={item.href}>{item.label}<span>↗</span></a>)}</nav>
+</header>
+<script>
+  const root = document.documentElement;
+  let saved; try { saved = localStorage.getItem('ws-theme'); } catch {}
+  root.dataset.theme = saved || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+  const themeButton = document.querySelector<HTMLButtonElement>('.theme-toggle');
+  const updateThemeLabel = () => { const dark = root.dataset.theme === 'dark'; if (themeButton) { themeButton.innerHTML = `<span class="theme-icon" aria-hidden="true">${dark ? '☀' : '☾'}</span>`; themeButton.setAttribute('aria-label', (dark ? themeButton.dataset.lightLabel : themeButton.dataset.darkLabel) || 'Toggle theme'); themeButton.setAttribute('title', (dark ? themeButton.dataset.lightLabel : themeButton.dataset.darkLabel) || 'Toggle theme'); } };
+  updateThemeLabel();
+  themeButton?.addEventListener('click', () => {
+    const next = root.dataset.theme === 'dark' ? 'light' : 'dark'; root.dataset.theme = next; try { localStorage.setItem('ws-theme', next); } catch {} updateThemeLabel();
+  });
+  const menu = document.querySelector<HTMLButtonElement>('.menu-toggle');
+  menu?.addEventListener('click', () => { const open = menu.getAttribute('aria-expanded') !== 'true'; menu.setAttribute('aria-expanded', String(open)); menu.setAttribute('aria-label', (open ? menu.dataset.closeLabel : menu.dataset.openLabel) || 'Toggle navigation'); document.querySelector('.mobile-nav')?.classList.toggle('is-open', open); });
+</script>

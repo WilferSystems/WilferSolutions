@@ -1,0 +1,7 @@
+---
+import Brand from './Brand.astro';
+import { type Lang, whatsappUrl } from '../lib/content';
+const { lang = 'es' } = Astro.props as {lang:Lang};
+const isEs = lang === 'es';
+---
+<footer class="site-footer"><div class="footer-main"><Brand lang={lang} /><p>{isEs ? 'Servicios y soluciones tecnológicas con claridad, criterio y atención personal.' : 'Technology services and solutions, delivered with clarity, care and personal attention.'}</p><div class="footer-contact"><a href={whatsappUrl} target="_blank" rel="noreferrer">WhatsApp <span>↗</span></a><a href="mailto:wilfercabrera15@gmail.com">wilfercabrera15@gmail.com</a></div><div class="social-links"><a href="https://www.linkedin.com/in/wilfer-reyel-84a4a9267" target="_blank" rel="noreferrer">LinkedIn ↗</a><a href="https://github.com/WilferSystems" target="_blank" rel="noreferrer">GitHub ↗</a></div></div><div class="footer-bottom"><span>© {new Date().getFullYear()} Wilfer Solutions · Wilfer Florentin</span><a href={`/${lang}/privacidad/`}>{isEs ? 'Política de privacidad' : 'Privacy policy'}</a><span>{isEs ? 'Atención principalmente remota' : 'Mainly remote service'}</span></div></footer>
