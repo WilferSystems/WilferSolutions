@@ -1,0 +1,31 @@
+---
+import type { Lang } from '../lib/content';
+const { lang = 'es' } = Astro.props as { lang: Lang };
+const isEs = lang === 'es';
+---
+<section class="section remote-support" aria-labelledby="remote-support-title">
+  <div class="section-inner remote-support-inner">
+    <div>
+      <span class="section-kicker">{isEs ? 'ASISTENCIA A DISTANCIA' : 'REMOTE ASSISTANCE'}</span>
+      <h2 class="section-heading" id="remote-support-title">{isEs ? 'Podemos revisar tu computadora con RustDesk' : 'We can look at your computer with RustDesk'}</h2>
+      <p class="section-lead">{isEs
+        ? 'RustDesk permite compartir la pantalla y recibir asistencia remota cuando lo coordinemos. Para conectarnos, ambos necesitamos tener RustDesk abierto: vos en la computadora que necesita ayuda y yo en la computadora desde la que te asista. Descargalo desde el sitio oficial y abrilo en tu equipo.'
+        : 'RustDesk lets you share your screen and receive remote assistance when we arrange it. To connect, we both need RustDesk open: you on the computer that needs help and me on the computer I use to assist you. Download it from the official site and open it on your device.'}</p>
+    </div>
+    <div class="remote-support-details">
+      <h3>{isEs ? '¿Qué necesitás?' : 'What do you need?'}</h3>
+      <ul>
+        <li>{isEs ? 'Una computadora con Windows, macOS o Linux.' : 'A computer running Windows, macOS or Linux.'}</li>
+        <li>{isEs ? 'Conexión a internet y RustDesk abierto.' : 'An internet connection and RustDesk open.'}</li>
+        <li>{isEs ? 'Durante la asistencia acordada, compartir el ID y la clave temporal que muestra RustDesk.' : 'During the scheduled support session, share the ID and temporary password shown by RustDesk.'}</li>
+      </ul>
+      <p class="remote-support-safety">{isEs
+        ? 'Por seguridad, compartí esos datos únicamente conmigo al iniciar la asistencia. Aceptá el acceso solo si lo esperás y podés cerrar RustDesk para terminar la sesión.'
+        : 'For your security, share those details only with me when support begins. Accept access only when you are expecting it, and close RustDesk to end the session.'}</p>
+      <a class="button button-primary remote-support-download" href="https://rustdesk.com/download/" target="_blank" rel="noopener noreferrer">
+        {isEs ? 'Descargar RustDesk oficial' : 'Download official RustDesk'} <span class="arrow" aria-hidden="true">↗</span>
+      </a>
+      <p class="remote-support-footnote">{isEs ? 'El enlace abre el sitio oficial de RustDesk para elegir la versión de tu sistema.' : 'This link opens the official RustDesk site so you can choose the version for your operating system.'}</p>
+    </div>
+  </div>
+</section>

@@ -3,8 +3,8 @@ export const siteUrl = (import.meta.env.SITE_URL || '').replace(/\/$/, '');
 export const whatsappNumber = '+54 9 3464 515178';
 export const whatsappUrl = 'https://wa.me/5493464515178?text=Hola%2C%20quisiera%20hacer%20una%20consulta%20a%20Wilfer%20Solutions.';
 export const nav = {
-  es: [{label:'Servicios',href:'/es/servicios/'},{label:'Empresas',href:'/es/empresas/'},{label:'Particulares',href:'/es/particulares/'},{label:'Proyectos',href:'/es/proyectos/'},{label:'Sobre mí',href:'/es/sobre-mi/'},{label:'Blog',href:'/es/blog/'},{label:'Contacto',href:'/es/contacto/'}],
-  en: [{label:'Services',href:'/en/services/'},{label:'Businesses',href:'/en/businesses/'},{label:'Individuals',href:'/en/individuals/'},{label:'Projects',href:'/en/projects/'},{label:'About',href:'/en/about/'},{label:'Blog',href:'/en/blog/'},{label:'Contact',href:'/en/contact/'}]
+  es: [{label:'Inicio',href:'/es/'},{label:'Servicios',href:'/es/servicios/'},{label:'Empresas',href:'/es/empresas/'},{label:'Particulares',href:'/es/particulares/'},{label:'Proyectos',href:'/es/proyectos/'},{label:'Sobre mí',href:'/es/sobre-mi/'},{label:'Blog',href:'/es/blog/'},{label:'Contacto',href:'/es/contacto/'}],
+  en: [{label:'Home',href:'/en/'},{label:'Services',href:'/en/services/'},{label:'Businesses',href:'/en/businesses/'},{label:'Individuals',href:'/en/individuals/'},{label:'Projects',href:'/en/projects/'},{label:'About',href:'/en/about/'},{label:'Blog',href:'/en/blog/'},{label:'Contact',href:'/en/contact/'}]
 };
 export const home = {
   es: {

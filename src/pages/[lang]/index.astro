@@ -1,6 +1,9 @@
 ---
 export const prerender = true;
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import { Image } from 'astro:assets';
+import logoLight from '../../assets/logo-light.png';
+import logoDark from '../../assets/logo-dark.png';
 import { home, siteUrl, whatsappUrl } from '../../lib/content';
 export function getStaticPaths(){return [{params:{lang:'es'}},{params:{lang:'en'}}]}
 const lang = Astro.params.lang as 'es'|'en'; const c = home[lang]; const isEs=lang==='es';
@@ -10,7 +13,7 @@ const description = isEs ? 'Soporte técnico informático, asesoramiento tecnol�
 <BaseLayout lang={lang} title={title} description={description}>
   <script type="application/ld+json" set:html={JSON.stringify({ '@context':'https://schema.org','@type':'Person',name:'Wilfer Florentin',url:siteUrl?`${siteUrl}/${lang}/`:undefined,jobTitle:isEs?'Servicios y soluciones tecnológicas':'Technology services and solutions',sameAs:['https://www.linkedin.com/in/wilfer-reyel-84a4a9267','https://github.com/WilferSystems']})}/>
   <section class="hero"><div><div class="eyebrow">{c.eyebrow}</div><h1>{c.title}<br/><em>{c.accent}</em></h1><p class="hero-copy">{c.intro}</p><div class="button-row"><a class="button button-primary" href={`/${lang}/${isEs?'contacto':'contact'}/`}>{c.primary}<span class="arrow">↗</span></a><a class="button button-outline" href={`/${lang}/${isEs?'servicios':'services'}/`}>{c.secondary}</a></div><p class="hero-note">{c.proof}</p></div>
-  <div class="hero-art"><img class="hero-art-logo brand-logo-light" src="/logo-light.png" width="1000" height="273" alt={isEs ? 'Logotipo Wilfer Solutions en azul y celeste' : 'Wilfer Solutions logo in navy and blue'} /><img class="hero-art-logo brand-logo-dark" src="/logo-dark.png" width="1000" height="273" alt={isEs ? 'Logotipo Wilfer Solutions en blanco y celeste' : 'Wilfer Solutions logo in white and blue'} /></div></section>
+  <div class="hero-art"><Image class="hero-art-logo brand-logo-light" src={logoLight} alt={isEs ? 'Logotipo Wilfer Solutions en azul y celeste' : 'Wilfer Solutions logo in navy and blue'} format="webp" quality={90} loading="eager" /><Image class="hero-art-logo brand-logo-dark" src={logoDark} alt={isEs ? 'Logotipo Wilfer Solutions en blanco y celeste' : 'Wilfer Solutions logo in white and blue'} format="webp" quality={90} loading="eager" /></div></section>
   <section class="section section-soft"><div class="section-inner statement"><h2>{c.statement}</h2><p>{c.statementBody}</p></div></section>
   <section class="section"><div class="section-inner"><span class="section-kicker">01 / {isEs?'Servicios':'Services'}</span><h2 class="section-heading">{c.servicesTitle}</h2><p class="section-lead">{c.servicesLead}</p><div class="service-grid">{c.services.map(([n,title,desc,audience,href])=><article class="service-item"><span class="service-number">{n} /</span><h3>{title}</h3><p>{desc}</p><span class="audience">{audience}</span><br/><a class="text-link" href={href}>{isEs?'Conocer más':'Learn more'} <span>↗</span></a></article>)}</div></div></section>
   <section class="section section-soft"><div class="section-inner"><span class="section-kicker">02 / {isEs?'A quién acompaño':'Who I help'}</span><h2 class="section-heading">{c.audienceTitle}</h2><div class="audience-grid">{c.audience.map(([title,body,label,href])=><a class="audience-card" href={href}><span class="small-label">{label}</span><h3>{title}</h3><p>{body}</p><span class="text-link">{isEs?'Ver cómo puedo ayudarte':'See how I can help'} <span>↗</span></span></a>)}</div></div></section>

@@ -50,9 +50,15 @@ Configurá en `.env` para desarrollo y en **Vercel → Project → Settings → 
 - `CONTACT_TO`: opcional; por defecto `wilfercabrera15@gmail.com`.
 - `SITE_URL`: dominio público canónico con `https://` y sin barra final. Es necesario para generar sitemap, canonical y hreflang correctos.
 
+### Prueba sin dominio propio
+
+Para probar el endpoint antes de verificar un dominio, Resend permite usar `Wilfer Solutions <onboarding@resend.dev>` como remitente de prueba. Solo se puede entregar al correo verificado de la cuenta Resend. La configuración de prueba está actualmente en el `.env` local, que está excluido de Git y tiene permisos de lectura/escritura solo para el usuario. No envíes esta configuración de prueba a Vercel ni la uses para atender consultas públicas.
+
+Cuando tengas un dominio propio, verificá sus registros DNS en Resend, creá una nueva clave `sending_access` limitada a ese dominio, reemplazá `CONTACT_FROM` por una dirección del dominio verificado y guardá los valores de producción en Vercel. La clave de prueba actual no está limitada por dominio porque todavía no hay uno configurado; podés revocarla desde Resend después de cambiar a producción.
+
 Como confirmaste que el WhatsApp es personal, el enlace agrega el `9` requerido para móviles argentinos: `5493464515178`. WhatsApp usa números en formato internacional ([guía oficial](https://faq.whatsapp.com/5913398998672934/?locale=es_LA)); la regla argentina de móviles se detalla en la [referencia de Twilio](https://www.twilio.com/docs/whatsapp/isv/register-senders). Si el número cambia, actualizá `whatsappNumber` y `whatsappUrl` en `src/lib/content.ts`.
 
-No uses una dirección de Gmail como `CONTACT_FROM` salvo que esté verificada en Resend. Durante el desarrollo, usá un dominio propio verificado y enviá solo a destinatarios autorizados por tu cuenta. El sitio no incluye una clave de prueba compartida.
+No uses una dirección de Gmail como `CONTACT_FROM` salvo que esté verificada en Resend. El sitio no incluye una clave de prueba compartida; la clave local de prueba nunca se sube al repositorio.
 
 El endpoint valida campos y origen, limita el cuerpo, incorpora honeypot y aplica cinco solicitudes por diez minutos por instancia/IP. El límite se guarda en memoria: en serverless es una defensa básica, no un límite global persistente. Si aparece abuso, agregá rate limiting persistente o CAPTCHA. Los mensajes no se guardan en la base de datos del sitio; el correo y su proveedor pueden conservarlos según sus políticas.
 
